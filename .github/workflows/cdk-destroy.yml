@@ -1,11 +1,11 @@
-name: CDK Deployment Pipeline
+name: CDK Terminate Pipeline
 
 on:
   workflow_dispatch:
 
 jobs:
-    deploy:
-        name: Deploy CDK Stack
+    destroy:
+        name: Destroy CDK Stack
         environment: production
         runs-on: ubuntu-latest
         env:
@@ -34,11 +34,5 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
-            - name: Preview Cloudformation Changes
-              run: cdk diff
-
-            - name: Bootstrap CDK
-              run: cdk bootstrap aws://$AWS_ACCOUNT_ID/$AWS_REGION
-
-            - name: Deploy CDK Stack
-              run: cdk deploy --require-approval never
+            - name: Destroy CDK Stack
+              run: cdk destroy --force
