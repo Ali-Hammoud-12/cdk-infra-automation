@@ -4,16 +4,17 @@
   "description": "This project is for learning AWS CDK (Cloud Development Kit) and infrastructure as code concepts.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "prepare": "husky"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-cdk": "^2.1031.2"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
+    "husky": "^9.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
