@@ -1,0 +1,15 @@
+{
+  "name": "master-learning-cdk",
+  "version": "1.0.0",
+  "description": "This project is for learning AWS CDK (Cloud Development Kit) and infrastructure as code concepts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-cdk": "^2.1031.2"
+  }
+}
