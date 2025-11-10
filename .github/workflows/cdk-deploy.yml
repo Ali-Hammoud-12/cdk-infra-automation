@@ -1,0 +1,46 @@
+name: CDK Deployment Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+    deploy:
+        name: Deploy CDK Stack
+        environment: production
+        runs-on: ubuntu-latest
+        env:
+            AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '22'
+
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v5
+              with:
+                  role-to-assume: ${{ env.AWS_ROLE_ARN }}
+                  aws-region: ${{ env.AWS_REGION }}
+
+            - name: Install AWS CDK
+              run: npm install -g aws-cdk
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Preview Cloudformation Changes
+              run: cdk diff
+
+            - name: Bootstrap CDK
+              run: cdk bootstrap aws://$AWS_ACCOUNT_ID/$AWS_REGION
+              working-directory: ./path-to-your-cdk-app
+
+            - name: Deploy CDK Stack
+              run: cdk deploy --require-approval never
+              working-directory: ./path-to-your-cdk-app
