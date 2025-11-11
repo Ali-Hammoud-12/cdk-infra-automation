@@ -1,6 +1,9 @@
 name: CDK Deployment Pipeline
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
