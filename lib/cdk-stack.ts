@@ -1,6 +1,7 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib/core';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
+import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 
 // the class constructors of both CdkWorkshopStack and lambda.Function (and many other classes in the CDK) have the signature (scope, id, props)
 
@@ -13,5 +14,10 @@ export class CdkStack extends Stack {
       handler: "hello.handler",
       code: Code.fromAsset("functions/hello"),
     });
+
+    const lambdaApi = new LambdaRestApi(this, 'LambdaEndpoint', {
+      handler: hello,
+    });
+
   }
 }
