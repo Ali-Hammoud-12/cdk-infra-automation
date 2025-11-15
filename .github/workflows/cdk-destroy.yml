@@ -8,10 +8,25 @@ permissions:
   contents: read
 
 jobs:
+    authorize:
+        name: authorize workflow access
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - name: Authorization Check
+              run: |
+                AUTHORIZED_USERS="Ali-Hammoud-12"
+                GITHUB_ACTOR="${{ github.actor }}"
+
+                if [[ ! " $AUTHORIZED_USERS " =~ " $GITHUB_ACTOR " ]]; then
+                  echo "❌ Unauthorized user. Deployment aborted."
+                  exit 1
+                fi
     destroy:
         name: Destroy CDK Stack
         environment: production
         runs-on: ubuntu-latest
+        needs: authorize
         env:
             AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
             AWS_REGION: ${{ secrets.AWS_REGION }}
